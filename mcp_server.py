@@ -58,7 +58,7 @@ def get_model():
 
 @mcp.tool()
 def switch_model(model_name: str) -> str:
-    """Switch between character models: 'hiyori' (Live2D) or 'nagatoro_sprite' (sprite)."""
+    """Switch models: 'hiyori' (Live2D) or 'nagatoro_sprite' (sprite). Nagatoro sprite: https://github.com/nukkerman2000/nagatoru-live2d"""
     if widget_ref is None:
         return "Error: Widget not initialized"
     try:
