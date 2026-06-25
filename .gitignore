@@ -1,0 +1,57 @@
+# Python portable runtime
+python/
+
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# STT models (downloaded on first run)
+stt_models/
+
+# Piper TTS binaries (multi-platform, download separately)
+piper/
+
+# TTS voice models (download separately)
+voices/
+
+# Local config with personal/NSFW content (use config.example.json as template)
+config.json
+
+# MCP session file
+.mcp_session
+
+# Music tracks
+*.mp3
+*.wav
+*.flac
+*.ogg
+
+# Audio recordings
+recordings/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+recovery/
+
+# Screenshots
+screenshots/
+
+# OS files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

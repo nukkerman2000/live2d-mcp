@@ -1,0 +1,143 @@
+/** Multiplier for candidate count in hybrid search (to allow reranking) */
+export declare const HYBRID_SEARCH_CANDIDATE_MULTIPLIER = 2;
+/** FTS index name (bump version when changing tokenizer settings) */
+export declare const FTS_INDEX_NAME = "fts_index_v2";
+/** Threshold for cleaning up old index versions (1 minute) */
+export declare const FTS_CLEANUP_THRESHOLD_MS: number;
+/**
+ * Grouping mode for quality filtering
+ * - 'similar': Only return the most similar group (stops at first distance jump)
+ * - 'related': Include related groups (stops at second distance jump)
+ */
+export type GroupingMode = 'similar' | 'related';
+/**
+ * VectorStore configuration
+ */
+export interface VectorStoreConfig {
+    /** LanceDB database path */
+    dbPath: string;
+    /** Table name */
+    tableName: string;
+    /** Maximum distance threshold for filtering results (optional) */
+    maxDistance?: number;
+    /** Grouping mode for quality filtering (optional) */
+    grouping?: GroupingMode;
+    /** Hybrid search weight for BM25 (0.0 = vector only, 1.0 = BM25 only, default 0.6) */
+    hybridWeight?: number;
+    /** Maximum number of files to keep in results (optional, filters by best score per file) */
+    maxFiles?: number;
+}
+/**
+ * Document metadata
+ */
+export interface DocumentMetadata {
+    /** File name */
+    fileName: string;
+    /** File size in bytes */
+    fileSize: number;
+    /** File type (extension) */
+    fileType: string;
+}
+/**
+ * Vector chunk
+ */
+export interface VectorChunk {
+    /** Chunk ID (UUID) */
+    id: string;
+    /** File path (absolute) */
+    filePath: string;
+    /** Chunk index (zero-based) */
+    chunkIndex: number;
+    /** Chunk text */
+    text: string;
+    /** Embedding vector (dimension depends on model) */
+    vector: number[];
+    /** Metadata */
+    metadata: DocumentMetadata;
+    /** Document title extracted from file content (display-only, not used for scoring) */
+    fileTitle: string | null;
+    /** Ingestion timestamp (ISO 8601 format) */
+    timestamp: string;
+}
+/**
+ * Search result
+ */
+export interface SearchResult {
+    /** File path */
+    filePath: string;
+    /** Chunk index */
+    chunkIndex: number;
+    /** Chunk text */
+    text: string;
+    /** Distance score using dot product (0 = identical, 1 = orthogonal, 2 = opposite) */
+    score: number;
+    /** Metadata */
+    metadata: DocumentMetadata;
+    /** Document title extracted from file content (display-only, not used for scoring) */
+    fileTitle: string | null;
+}
+/**
+ * Row returned by VectorStore.getChunksByRange.
+ * Distinct from SearchResult (see Design Doc §Contract Definitions):
+ * no score (not a ranked result) and no metadata (not needed for
+ * index-adjacent retrieval). Consumed by handleReadChunkNeighbors
+ * and runReadNeighbors (Task 1.2).
+ */
+export interface ChunkRow {
+    /** File path (absolute) */
+    filePath: string;
+    /** Chunk index (zero-based) */
+    chunkIndex: number;
+    /** Chunk text */
+    text: string;
+    /** Document title extracted from file content (display-only, not used for scoring) */
+    fileTitle: string | null;
+}
+/**
+ * Raw result from LanceDB query (internal type)
+ */
+export interface LanceDBRawResult {
+    filePath: string;
+    chunkIndex: number;
+    text: string;
+    metadata: DocumentMetadata;
+    /** Document title (optional - existing rows lack this field before migration) */
+    fileTitle?: string | null;
+    _distance?: number;
+    _score?: number;
+}
+/**
+ * Type guard for DocumentMetadata
+ */
+export declare function isDocumentMetadata(value: unknown): value is DocumentMetadata;
+/**
+ * Type guard for LanceDB raw search result
+ */
+export declare function isLanceDBRawResult(value: unknown): value is LanceDBRawResult;
+/**
+ * Convert LanceDB raw result to SearchResult with type validation
+ * @throws DatabaseError if the result is invalid
+ */
+export declare function toSearchResult(raw: unknown): SearchResult;
+/**
+ * Convert LanceDB raw row to ChunkRow with type validation.
+ * Mirrors toSearchResult but returns the minimal shape defined in
+ * Design Doc §Contract Definitions: no score (not ranked) and no
+ * metadata (not needed for index-adjacent retrieval).
+ *
+ * Uses a narrower shape check than isLanceDBRawResult: only
+ * filePath/chunkIndex/text are required because getChunksByRange
+ * does not project metadata. The empty-string-or-missing fileTitle
+ * is normalized to null per §Field Propagation Map.
+ *
+ * @throws DatabaseError if the raw row is missing required fields
+ */
+export declare function toChunkRow(raw: unknown): ChunkRow;
+/**
+ * Database error
+ */
+export declare class DatabaseError extends Error {
+    readonly cause?: Error | undefined;
+    constructor(message: string, cause?: Error | undefined);
+}
+//# sourceMappingURL=types.d.ts.map

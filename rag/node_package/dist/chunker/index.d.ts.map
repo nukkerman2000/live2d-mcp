@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../src/chunker/index.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,MAAM,WAAW,SAAS;IACxB,iBAAiB;IACjB,IAAI,EAAE,MAAM,CAAA;IACZ,+BAA+B;IAC/B,KAAK,EAAE,MAAM,CAAA;CACd;AAED,OAAO,EAAE,wBAAwB,EAAE,eAAe,EAAE,MAAM,uBAAuB,CAAA"}
