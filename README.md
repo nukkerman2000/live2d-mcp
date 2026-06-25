@@ -6,7 +6,7 @@
 
 - **Live2D-персонаж** — анимированная модель Hiyori на десктопе (через PyQt6 + OpenGL)
 - **TTS (Text-to-Speech)** — голосовой вывод через Piper TTS (русские голоса: Irina, Denis, Ruslan)
-- **STT (Speech-to-Text)** — распознавание речи через faster-whisper
+- **STT (Speech-to-Text)** — распознавание речи через faster-whisper ⚠️ (временно не работает)
 - **MCP сервер** — 36 инструментов для управления персонажем через любой MCP-клиент
 - **RAG (Retrieval-Augmented Generation)** — семантический поиск по документам
 - **Веб-интерфейс** — управление через браузер на `http://localhost:8766`
