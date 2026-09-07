@@ -3,9 +3,7 @@ chcp 65001 >nul
 title Live2D MCP Server (venv)
 
 set ROOT=%~dp0
-if exist "%~dp0python\Scripts\python.exe" (
-    set BASE_PYTHON="%~dp0python\Scripts\python.exe"
-) else if exist "%~dp0python\python.exe" (
+if exist "%~dp0python\python.exe" (
     set BASE_PYTHON="%~dp0python\python.exe"
 ) else (
     set BASE_PYTHON=python
@@ -23,8 +21,16 @@ echo.
 if not exist "%PYTHON%" (
     echo Creating virtual environment...
     %BASE_PYTHON% -m venv "%VENV%"
+    if errorlevel 1 (
+        echo ERROR: failed to create venv. Try running setup_python.bat first.
+        pause
+        exit /b 1
+    )
     echo Installing dependencies...
     "%PYTHON%" -m pip install -r "%ROOT%\requirements.txt"
+    if errorlevel 1 (
+        echo WARNING: some packages failed to install. Check output above.
+    )
     echo.
 )
 echo Starting MCP Server + Web UI + TTS...

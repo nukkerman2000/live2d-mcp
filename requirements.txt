@@ -1,14 +1,31 @@
+# Core
 PyQt6>=6.5
 live2d-py>=0.5.4
 PyOpenGL>=3.1
 mcp>=1.0
 uvicorn>=0.20
-pygame>=2.5
-mutagen>=1.47
-sounddevice>=0.5
-piper-tts>=1.4
-faster-whisper>=1.0
-httpx>=0.27
 starlette>=0.27
+httpx>=0.27
 Pillow>=10.0
 numpy>=1.24
+
+# Music
+pygame>=2.5
+mutagen>=1.47
+
+# STT / TTS
+sounddevice>=0.5
+soundfile>=0.12
+piper-tts>=1.4
+faster-whisper>=1.0
+webrtcvad>=2.0.10
+
+# RAG
+onnxruntime>=1.17
+tokenizers>=0.15
+scipy>=1.10
+PyPDF2>=3.0
+pdfminer.six>=20231228
+
+# Web UI system info
+psutil>=5.9
